@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PromptVault — Premium AI Prompt Packs & Tools</title>
-  <meta name="description" content="Premium AI prompt packs, automation templates, and tools for ChatGPT, Claude, Midjourney and more. Instant delivery. Pay with crypto.">
+  <meta name="description" content="Premium AI prompt packs, automation templates, and tools for ChatGPT, Claude, Midjourney and more. Instant delivery. Pay with card or crypto.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -302,6 +302,91 @@
       box-shadow: 0 0 30px var(--accent-glow);
     }
 
+    .buy-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .buy-btn .spinner {
+      display: inline-block;
+      width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .pay-stripe-btn {
+      background: linear-gradient(135deg, #635bff, #7c3aed);
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .pay-stripe-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 30px rgba(99, 91, 255, 0.3);
+    }
+
+    .pay-stripe-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .pay-crypto-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .pay-crypto-btn:hover {
+      border-color: var(--accent);
+      background: var(--surface);
+    }
+
+    .divider-or {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 16px 0;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    .divider-or::before, .divider-or::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
     /* PAYMENT MODAL */
     .modal-overlay {
       display: none;
@@ -552,7 +637,7 @@
         <a href="#products">Products</a>
         <a href="#how">How it Works</a>
         <a href="#faq">FAQ</a>
-        <span class="nav-badge">💎 Pay with Crypto</span>
+        <span class="nav-badge">💳 Card & 💎 Crypto</span>
       </div>
     </div>
   </nav>
@@ -561,7 +646,7 @@
     <div class="container">
       <div class="hero-badge">🚀 New: AI Automation Toolkit just dropped</div>
       <h1>Stop Guessing.<br><span class="gradient-text">Start Prompting.</span></h1>
-      <p>Premium prompt packs & AI workflow templates used by 2,000+ creators, developers, and entrepreneurs. Pay with crypto. Get instant access.</p>
+      <p>Premium prompt packs & AI workflow templates used by 2,000+ creators, developers, and entrepreneurs. Pay with card or crypto. Get instant access.</p>
       <div class="hero-stats">
         <div class="stat">
           <div class="stat-number">1,500+</div>
@@ -603,8 +688,8 @@
         </div>
         <div class="step">
           <div class="step-number">2</div>
-          <h4>Pay with Crypto</h4>
-          <p>Send ETH or USDT to our wallet. No sign-up needed. No personal data required. Just pay and go.</p>
+          <h4>Pay Your Way</h4>
+          <p>Pay instantly with card via Stripe, or send ETH/USDT to our wallet. No sign-up needed. Just pay and go.</p>
         </div>
         <div class="step">
           <div class="step-number">3</div>
@@ -657,8 +742,15 @@
       <button class="modal-close" onclick="closeModal()">×</button>
       <h3 id="modalProductName"></h3>
       <div class="modal-price" id="modalPrice"></div>
-      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Send the exact amount to the wallet below:</p>
-      
+
+      <!-- Stripe Checkout -->
+      <button class="pay-stripe-btn" id="stripePayBtn" onclick="stripeCheckout()">
+        💳 Pay with Card — Instant Access
+      </button>
+
+      <div class="divider-or">or pay with crypto</div>
+
+      <!-- Crypto Section -->
       <div class="payment-methods">
         <div class="payment-option">
           <div>
@@ -683,7 +775,7 @@
       <div class="copy-hint">Click to copy address</div>
 
       <div class="modal-note">
-        📧 Include your email in the transaction memo, or DM us on X after payment for instant delivery. We verify on-chain and deliver within minutes.
+        🔒 Card payments are securely processed by Stripe. Crypto payments: include your email in the memo or DM us on X for instant delivery.
       </div>
     </div>
   </div>
@@ -797,6 +889,62 @@
     document.getElementById('paymentModal').addEventListener('click', e => {
       if (e.target === e.currentTarget) closeModal();
     });
+
+    // Stripe Checkout
+    let currentProductId = null;
+
+    const _origOpenModal = openModal;
+    openModal = function(productId) {
+      currentProductId = productId;
+      _origOpenModal(productId);
+    };
+
+    async function stripeCheckout() {
+      const btn = document.getElementById('stripePayBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span> Redirecting to checkout...';
+      
+      try {
+        const res = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ productId: currentProductId })
+        });
+        const data = await res.json();
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          throw new Error(data.error || 'Checkout failed');
+        }
+      } catch (err) {
+        btn.disabled = false;
+        btn.innerHTML = '💳 Pay with Card — Instant Access';
+        alert('Checkout error: ' + err.message + '. Try crypto payment or refresh the page.');
+      }
+    }
+
+    // Handle success/cancel redirects
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('success') === 'true') {
+      document.body.insertAdjacentHTML('beforeend', `
+        <div style="position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);z-index:9999;display:flex;align-items:center;justify-content:center;">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px;text-align:center;max-width:500px;">
+            <div style="font-size:3rem;margin-bottom:16px;">🎉</div>
+            <h2 style="font-size:1.5rem;margin-bottom:12px;">Payment Successful!</h2>
+            <p style="color:var(--text-muted);margin-bottom:24px;">Thank you for your purchase! Check your email for the download link. If you don't see it within 5 minutes, check your spam folder.</p>
+            <button onclick="window.location.href='/'" style="background:var(--accent);color:white;border:none;padding:12px 32px;border-radius:10px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit;">Back to Store</button>
+          </div>
+        </div>
+      `);
+    }
+    if (params.get('canceled') === 'true') {
+      const toast = document.getElementById('toast');
+      toast.textContent = 'Payment canceled — no charge was made.';
+      toast.style.background = 'var(--orange)';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 4000);
+      window.history.replaceState({}, '', '/');
+    }
 
     renderProducts();
   </script>
