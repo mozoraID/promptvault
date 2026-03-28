@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
     params.append('payment_method_types[0]', 'card');
     params.append('line_items[0][price]', PRICE_MAP[productId]);
     params.append('line_items[0][quantity]', '1');
-    params.append('success_url', `${origin}?success=true&product=${productId}`);
+    params.append('success_url', `${origin}/api/success?session_id={CHECKOUT_SESSION_ID}`);
     params.append('cancel_url', `${origin}?canceled=true`);
 
     const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
