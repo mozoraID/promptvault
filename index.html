@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromptVault — Premium AI Prompt Packs & Tools</title>
+  <meta name="description" content="Premium AI prompt packs, automation templates, and tools for ChatGPT, Claude, Midjourney and more. Instant delivery. Pay with crypto.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface2: #1a1a1f;
+      --border: #2a2a30;
+      --text: #e8e8ed;
+      --text-muted: #8b8b96;
+      --accent: #6c5ce7;
+      --accent-light: #a29bfe;
+      --accent-glow: rgba(108, 92, 231, 0.3);
+      --green: #00d2a0;
+      --orange: #ff9f43;
+      --pink: #ff6b9d;
+      --blue: #4fc3f7;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Animated gradient background */
+    .bg-gradient {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(108, 92, 231, 0.15), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 50%, rgba(0, 210, 160, 0.08), transparent),
+        radial-gradient(ellipse 60% 40% at 20% 80%, rgba(255, 107, 157, 0.08), transparent);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* NAV */
+    nav {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 11, 0.8);
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent-light), var(--green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span { opacity: 0.6; font-weight: 500; }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-badge {
+      background: var(--accent);
+      color: white;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 100px 0 60px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      color: var(--accent-light);
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -2px;
+    }
+
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, var(--accent-light), var(--green), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      margin-top: 48px;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent-light);
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* PRODUCTS GRID */
+    .products-section {
+      padding: 80px 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-header h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    .product-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(108, 92, 231, 0.15);
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-bestseller { background: var(--green); color: #000; }
+    .badge-toprated { background: var(--orange); color: #000; }
+    .badge-new { background: var(--pink); color: #fff; }
+    .badge-premium { background: linear-gradient(135deg, var(--accent), var(--pink)); color: #fff; }
+    .badge-devpick { background: var(--blue); color: #000; }
+
+    .product-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      padding-right: 80px;
+    }
+
+    .product-card .desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    .features-list {
+      list-style: none;
+      margin-bottom: 24px;
+    }
+
+    .features-list li {
+      padding: 6px 0;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .features-list li::before {
+      content: "✓";
+      color: var(--green);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .price {
+      font-size: 1.8rem;
+      font-weight: 800;
+    }
+
+    .price-eth {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: block;
+    }
+
+    .buy-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .buy-btn:hover {
+      background: var(--accent-light);
+      box-shadow: 0 0 30px var(--accent-glow);
+    }
+
+    /* PAYMENT MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .modal h3 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+
+    .modal .modal-price {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--accent-light);
+      margin-bottom: 24px;
+    }
+
+    .payment-methods {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .payment-option {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .payment-option:hover {
+      border-color: var(--accent);
+    }
+
+    .payment-option .label {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .payment-option .sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .wallet-address {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      font-family: monospace;
+      font-size: 0.75rem;
+      word-break: break-all;
+      color: var(--accent-light);
+      margin: 16px 0;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .wallet-address:hover {
+      border-color: var(--accent);
+    }
+
+    .copy-hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .modal-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* HOW IT WORKS */
+    .how-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 48px;
+    }
+
+    .step {
+      text-align: center;
+      padding: 32px;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--accent-light);
+      margin: 0 auto 16px;
+    }
+
+    .step h4 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* FAQ */
+    .faq-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .faq-list {
+      max-width: 700px;
+      margin: 48px auto 0;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-q::after {
+      content: "+";
+      font-size: 1.2rem;
+      color: var(--text-muted);
+    }
+
+    .faq-item.open .faq-q::after { content: "−"; }
+
+    .faq-a {
+      display: none;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+      line-height: 1.7;
+    }
+
+    .faq-item.open .faq-a { display: block; }
+
+    /* FOOTER */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--green);
+      color: #000;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 2000;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hero { padding: 60px 0 40px; }
+      .hero-stats { gap: 24px; }
+      .stat-number { font-size: 1.5rem; }
+      .products-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; gap: 16px; }
+      .nav-links { display: none; }
+      .product-card h3 { padding-right: 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-gradient"></div>
+
+  <nav>
+    <div class="container">
+      <div class="logo">PromptVault <span>AI</span></div>
+      <div class="nav-links">
+        <a href="#products">Products</a>
+        <a href="#how">How it Works</a>
+        <a href="#faq">FAQ</a>
+        <span class="nav-badge">💎 Pay with Crypto</span>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">🚀 New: AI Automation Toolkit just dropped</div>
+      <h1>Stop Guessing.<br><span class="gradient-text">Start Prompting.</span></h1>
+      <p>Premium prompt packs & AI workflow templates used by 2,000+ creators, developers, and entrepreneurs. Pay with crypto. Get instant access.</p>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-number">1,500+</div>
+          <div class="stat-label">Prompts & Templates</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">2,000+</div>
+          <div class="stat-label">Happy Customers</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">5★</div>
+          <div class="stat-label">Average Rating</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="products-section" id="products">
+    <div class="container">
+      <div class="section-header">
+        <h2>Choose Your Pack</h2>
+        <p>Instant delivery. Lifetime updates. No subscription.</p>
+      </div>
+      <div class="products-grid" id="productsGrid"></div>
+    </div>
+  </section>
+
+  <section class="how-section" id="how">
+    <div class="container">
+      <div class="section-header">
+        <h2>How It Works</h2>
+        <p>Get started in under 2 minutes</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h4>Pick Your Pack</h4>
+          <p>Browse our curated prompt packs and AI tools. Each one is battle-tested and regularly updated.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h4>Pay with Crypto</h4>
+          <p>Send ETH or USDT to our wallet. No sign-up needed. No personal data required. Just pay and go.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h4>Get Instant Access</h4>
+          <p>After payment confirmation, you'll receive a download link. Access your prompts forever.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <h2>Frequently Asked</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q">What AI models do these prompts work with?</div>
+          <div class="faq-a">All prompt packs are designed to work with ChatGPT (GPT-4o), Claude, Gemini, Llama, and other major models. Image prompts work with Midjourney, DALL-E, Flux, and Stable Diffusion.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How do I receive the products?</div>
+          <div class="faq-a">After sending payment, include your email in the transaction memo or contact us via the form. We'll send a download link within minutes. Products are delivered as organized PDF + Notion/Google Docs links.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Which crypto do you accept?</div>
+          <div class="faq-a">We accept ETH and USDT on Ethereum mainnet, Base, Arbitrum, and Polygon. Just send to our wallet address shown at checkout.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do I get updates?</div>
+          <div class="faq-a">Yes! All purchases include lifetime updates. We add new prompts monthly. Leave your email at checkout to get notified of updates.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Can I get a refund?</div>
+          <div class="faq-a">Due to the digital nature of the products, we can't offer refunds after delivery. However, if you're unsatisfied, reach out and we'll work something out.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 PromptVault AI — Built for builders. Powered by crypto.</p>
+    </div>
+  </footer>
+
+  <!-- Payment Modal -->
+  <div class="modal-overlay" id="paymentModal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <h3 id="modalProductName"></h3>
+      <div class="modal-price" id="modalPrice"></div>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Send the exact amount to the wallet below:</p>
+      
+      <div class="payment-methods">
+        <div class="payment-option">
+          <div>
+            <div class="label">Ξ ETH</div>
+            <div class="sub">Ethereum, Base, Arbitrum, or Polygon</div>
+          </div>
+          <div id="modalETH" style="font-weight:700; color: var(--accent-light);"></div>
+        </div>
+        <div class="payment-option">
+          <div>
+            <div class="label">💵 USDT</div>
+            <div class="sub">Same networks supported</div>
+          </div>
+          <div id="modalUSDT" style="font-weight:700; color: var(--green);"></div>
+        </div>
+      </div>
+
+      <p style="font-size:0.85rem; color: var(--text-muted); margin-bottom:8px;">Payment address:</p>
+      <div class="wallet-address" id="walletAddr" onclick="copyAddress()">
+        0x388507A14E4589061B7426Cb22C26b891b48e0e4
+      </div>
+      <div class="copy-hint">Click to copy address</div>
+
+      <div class="modal-note">
+        📧 Include your email in the transaction memo, or DM us on X after payment for instant delivery. We verify on-chain and deliver within minutes.
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">✓ Address copied to clipboard!</div>
+
+  <script>
+    const WALLET = "0x388507A14E4589061B7426Cb22C26b891b48e0e4";
+
+    const products = [
+      {
+        id: "mega-prompt-pack",
+        name: "Mega Prompt Pack — 500+ Expert Prompts",
+        price: 9.99,
+        priceETH: "0.005",
+        description: "500+ battle-tested prompts for ChatGPT, Claude, Gemini & more. Covers coding, marketing, writing, business, education, and creative work.",
+        features: ["500+ prompts across 12 categories", "Works with ChatGPT, Claude, Gemini, Llama", "Copy-paste ready format", "Lifetime updates", "Bonus: 50 system prompt templates"],
+        badge: "BEST SELLER",
+        badgeClass: "badge-bestseller"
+      },
+      {
+        id: "ai-automation-toolkit",
+        name: "AI Automation Toolkit — 50 Workflows",
+        price: 14.99,
+        priceETH: "0.008",
+        description: "50 plug-and-play AI automation workflows for business. Content pipelines, email sequences, data analysis, customer support bots.",
+        features: ["50 automation workflow templates", "n8n, Make.com & Zapier compatible", "Step-by-step setup guides", "Video walkthroughs included", "Bonus: AI tool comparison matrix"],
+        badge: "TOP RATED",
+        badgeClass: "badge-toprated"
+      },
+      {
+        id: "midjourney-master",
+        name: "Midjourney & Image AI Master Bundle",
+        price: 7.99,
+        priceETH: "0.004",
+        description: "200+ curated Midjourney/DALL-E/Flux prompts with exact parameters. Style guides, negative prompt library, and cheat sheets.",
+        features: ["200+ image generation prompts", "Style & mood libraries", "Parameter cheat sheets", "Negative prompt database", "Before/after examples"],
+        badge: "NEW",
+        badgeClass: "badge-new"
+      },
+      {
+        id: "solopreneur-ai-stack",
+        name: "Solopreneur AI Stack — Full Business Kit",
+        price: 19.99,
+        priceETH: "0.01",
+        description: "Everything a solo founder needs. Landing pages, email sequences, ad copy, financial models, hiring templates, and SOPs — all AI-powered.",
+        features: ["Complete business prompt library", "Email & ad copy generators", "Financial model templates", "Hiring & HR prompt templates", "Weekly updated resources"],
+        badge: "PREMIUM",
+        badgeClass: "badge-premium"
+      },
+      {
+        id: "developer-prompt-pack",
+        name: "Developer Pack — Code Like a 10x Engineer",
+        price: 11.99,
+        priceETH: "0.006",
+        description: "300+ developer-focused prompts for debugging, architecture, code review, DevOps, databases, APIs, and full-stack development.",
+        features: ["300+ coding prompts", "React, Next.js, Python, Node sections", "System design prompt templates", "Code review & debugging prompts", "DevOps & CI/CD templates"],
+        badge: "DEV PICK",
+        badgeClass: "badge-devpick"
+      }
+    ];
+
+    function renderProducts() {
+      const grid = document.getElementById('productsGrid');
+      grid.innerHTML = products.map(p => `
+        <div class="product-card">
+          <span class="product-badge ${p.badgeClass}">${p.badge}</span>
+          <h3>${p.name}</h3>
+          <p class="desc">${p.description}</p>
+          <ul class="features-list">
+            ${p.features.map(f => `<li>${f}</li>`).join('')}
+          </ul>
+          <div class="price-row">
+            <div>
+              <div class="price">$${p.price}</div>
+              <span class="price-eth">Ξ ${p.priceETH} ETH</span>
+            </div>
+            <button class="buy-btn" onclick="openModal('${p.id}')">Buy Now</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openModal(productId) {
+      const p = products.find(x => x.id === productId);
+      document.getElementById('modalProductName').textContent = p.name;
+      document.getElementById('modalPrice').textContent = `$${p.price}`;
+      document.getElementById('modalETH').textContent = `Ξ ${p.priceETH}`;
+      document.getElementById('modalUSDT').textContent = `$${p.price}`;
+      document.getElementById('paymentModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('paymentModal').classList.remove('active');
+    }
+
+    function copyAddress() {
+      navigator.clipboard.writeText(WALLET);
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    // FAQ toggle
+    document.addEventListener('click', e => {
+      const q = e.target.closest('.faq-q');
+      if (q) q.parentElement.classList.toggle('open');
+    });
+
+    // Close modal on overlay click
+    document.getElementById('paymentModal').addEventListener('click', e => {
+      if (e.target === e.currentTarget) closeModal();
+    });
+
+    renderProducts();
+  </script>
+</body>
+</html>

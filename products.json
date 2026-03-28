@@ -1,0 +1,52 @@
+[
+  {
+    "id": "mega-prompt-pack",
+    "name": "Mega Prompt Pack — 500+ Expert Prompts",
+    "price": 9.99,
+    "priceETH": "0.005",
+    "description": "500+ battle-tested prompts for ChatGPT, Claude, Gemini & more. Covers coding, marketing, writing, business, education, and creative work. Copy-paste ready.",
+    "features": ["500+ prompts across 12 categories", "Works with ChatGPT, Claude, Gemini, Llama", "Copy-paste ready format", "Lifetime updates via email", "Bonus: 50 system prompt templates"],
+    "category": "prompts",
+    "badge": "BEST SELLER"
+  },
+  {
+    "id": "ai-automation-toolkit",
+    "name": "AI Automation Toolkit — 50 Ready-Made Workflows",
+    "price": 14.99,
+    "priceETH": "0.008",
+    "description": "50 plug-and-play AI automation workflows for business. Includes templates for content pipelines, email sequences, data analysis, customer support bots, and more.",
+    "features": ["50 automation workflow templates", "n8n, Make.com & Zapier compatible", "Step-by-step setup guides", "Video walkthroughs included", "Bonus: AI tool comparison matrix"],
+    "category": "tools",
+    "badge": "TOP RATED"
+  },
+  {
+    "id": "midjourney-master",
+    "name": "Midjourney & Image AI Master Bundle",
+    "price": 7.99,
+    "priceETH": "0.004",
+    "description": "200+ curated Midjourney/DALL-E/Flux prompts with exact parameters. Includes style guides, negative prompt library, and aspect ratio cheat sheets.",
+    "features": ["200+ image generation prompts", "Style & mood libraries", "Parameter cheat sheets", "Negative prompt database", "Before/after examples"],
+    "category": "prompts",
+    "badge": "NEW"
+  },
+  {
+    "id": "solopreneur-ai-stack",
+    "name": "Solopreneur AI Stack — Complete Business Kit",
+    "price": 19.99,
+    "priceETH": "0.01",
+    "description": "Everything a solo founder needs to run a business with AI. Landing page prompts, email sequences, ad copy generators, financial models, hiring templates, and SOPs.",
+    "features": ["Complete business prompt library", "Email & ad copy generators", "Financial model templates", "Hiring & HR prompt templates", "Weekly updated Google Sheet"],
+    "category": "tools",
+    "badge": "PREMIUM"
+  },
+  {
+    "id": "developer-prompt-pack",
+    "name": "Developer Prompt Pack — Code Like a 10x Engineer",
+    "price": 11.99,
+    "priceETH": "0.006",
+    "description": "300+ developer-focused prompts for debugging, architecture, code review, DevOps, databases, APIs, and full-stack development. Includes framework-specific sections.",
+    "features": ["300+ coding prompts", "React, Next.js, Python, Node sections", "System design prompt templates", "Code review & debugging prompts", "DevOps & CI/CD templates"],
+    "category": "prompts",
+    "badge": "DEV PICK"
+  }
+]
