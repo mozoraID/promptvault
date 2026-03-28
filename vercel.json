@@ -2,10 +2,18 @@
   "version": 2,
   "builds": [
     { "src": "index.html", "use": "@vercel/static" },
-    { "src": "api/*.js", "use": "@vercel/node" }
+    { "src": "api/checkout.js", "use": "@vercel/node" },
+    { "src": "api/success.js", "use": "@vercel/node" },
+    { "src": "api/download.js", "use": "@vercel/node" },
+    { "src": "api/og.js", "use": "@vercel/node" },
+    { "src": "api/sitemap.js", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1.js" },
+    { "src": "/api/checkout", "dest": "/api/checkout.js" },
+    { "src": "/api/success", "dest": "/api/success.js" },
+    { "src": "/api/download", "dest": "/api/download.js" },
+    { "src": "/api/og", "dest": "/api/og.js" },
+    { "src": "/api/sitemap", "dest": "/api/sitemap.js" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
